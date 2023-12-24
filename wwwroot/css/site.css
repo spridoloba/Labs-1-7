@@ -1,0 +1,183 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    padding-top: 20px; /* Увеличение верхнего отступа для контейнера */
+    width: 90%; /* Задание ширины контейнера */
+    margin: auto;
+    z-index: 1;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: auto;
+    margin-top: 20px; /* Отступ сверху для формы */
+}
+
+
+
+label {
+    display: block;
+    margin-top: 10px;
+    color: #666;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0; /* Установка верхнего и нижнего отступа */
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form {
+    background-color: #f4f4f4; /* Цвет фона для формы */
+    padding: 20px; /* Внутренние отступы для формы */
+    border-radius: 5px; /* Скругление углов формы */
+}
+
+
+
+
+
+
+/* Стили для кнопки */
+button {
+    width: 100%; /* Ширина кнопки на всю ширину блока */
+    padding: 10px; /* Внутренние отступы для кнопки */
+    background-color: #007bff; /* Цвет фона для кнопки */
+    color: white; /* Цвет текста для кнопки */
+    border: none; /* Убрать границу у кнопки */
+    border-radius: 5px; /* Скругление углов кнопки */
+    cursor: pointer; /* Стиль курсора при наведении на кнопку */
+    margin-top: 20px;
+}
+
+    button:hover {
+        background-color: #0056b3; /* Цвет фона для кнопки при наведении */
+    }
+
+.btn-secondary {
+    margin-top: 20px;
+    background-color: #6c757d;
+    color: white;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+.dark-mode input,
+.dark-mode button,
+.dark-mode select,
+.dark-mode textarea {
+    background-color: #424242;
+    color: white;
+    border: 1px solid #ffffff50;
+}
+.dark-mode .form-container {
+    background-color: #262626; /* Темный фон для темной темы */
+    color: #ffffff; /* Белый текст для лучшей читаемости */
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.1); /* Светлая тень для приятного визуального эффекта */
+}
+.dark-mode .form-group label,
+.dark-mode .form-group input,
+.dark-mode .form-group .form-control {
+    color: white; /* Устанавливаем белый цвет текста для лучшей видимости на темном фоне */
+}
+
+.dark-mode .form-control:focus {
+    background-color: #424242; /* Темный фон */
+    color: white; /* Белый текст */
+    border: 1px solid #ffffff50; /* Светлая граница */
+    outline: none; /* Убрать стандартную рамку фокуса, если есть */
+}
+
+.dark-mode .btn-secondary {
+    /* Ваши существующие стили для .btn-secondary в темной теме */
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.1); /* Светлая тень для приятного визуального эффекта */
+}
+
+.dark-mode .status-message, .dark-mode .error-message {
+    color: white; /* Белый цвет текста в темной теме */
+}
+
+
+/* Стили для заголовков в темной теме */
+.dark-mode h1 {
+    color: white; /* Белый цвет текста для заголовков */
+}
+
+.dark-mode-button {
+    background-color: white; /* Белый фон для кнопки в темном режиме */
+    /* Другие стили, если необходимо */
+}
+
+
+    /* Стили для отключенных кнопок в темной теме */
+.dark-mode .btn-primary:disabled {
+    background-color: #424242; /* Тот же цвет фона, что и для активных кнопок */
+    color: white; /* Тот же цвет текста, что и для активных кнопок */
+    border-color: #6c757d; /* Тот же цвет границы, что и для активных кнопок */
+    opacity: 0.5; /* Вы можете настроить непрозрачность при необходимости */
+}
+
+/* Toggle Button Styles */
+#dark-mode-toggle {
+    background-color: #424242;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+#contactButton {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 1001;
+    background-color: #007bff; /* Цвет фона, синий по умолчанию */
+    color: white; /* Цвет текста */
+    border: none; /* Убрать границу */
+    padding: 5px 10px; /* Внутренние отступы: 5px сверху и снизу, 10px слева и справа */
+    font-size: 14px; /* Размер шрифта */
+    border-radius: 5px; /* Скругление углов */
+    cursor: pointer; /* Курсор в виде руки при наведении */
+    outline: none; /* Убрать контур при фокусе */
+}
+
+#contactForm {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1002;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    /* Добавьте другие стили для формы по желанию */
+}

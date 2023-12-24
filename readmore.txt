@@ -1,0 +1,73 @@
+1,en,Read More!
+2,es,¡Leer más!
+3,fr,Lire la suite!
+4,de,Weiterlesen!
+5,vi,Đọc thêm!
+6,nl,Lees verder!
+7,it,Leggi di più!
+8,pt,Leia mais!
+9,id,Baca Selanjutnya!
+10,el,Διαβάστε περισσότερα!
+11,th,อ่านเพิ่มเติม!
+12,hi,और पढ़ें!
+13,km,អានបន្ថែម!
+14,sv,Läs mer!
+15,hu,További információ!
+16,ms,Baca Lagi!
+17,ro,Citește mai mult!
+18,no,Les mer!
+19,hr,Čitaj više!
+20,pl,Czytaj więcej!
+21,fi,Lue lisää!
+22,da,Læs mere!
+23,fil,Magbasa Pa!
+24,cs,Přečtěte si více!
+25,ko,더 읽기!
+26,bs,Čitaj više!
+27,sk,Čítajte viac!
+28,ja,続きを読む!
+29,bg,Прочети още!
+30,sl,Preberi več!
+31,mk,Прочитај повеќе!
+32,tr,Daha fazla oku!
+33,et,Loe rohkem!
+34,hy,Կարդալ ավելին!
+35,sr,Прочитајте још!
+36,lt,Skaityti daugiau!
+37,az,Daha çox oxu!
+38,lv,Lasīt vairāk!
+39,ru,Читать далее!
+40,ur,مزید پڑھیں!
+41, ar,اقرأ المزيد!
+42, he,קרא עוד!
+43, zh,阅读更多!
+44,ka,წაიკითხე მეტი!
+45,ne,थप पढ्नुहोस्!
+46,sq,Lexo më shumë!
+47,bn,আরো পড়ুন!
+48,si,තව කියවන්න!
+49,uz,Batafsil o'qing!
+50,uk,Читати більше!
+51,ta,மேலும் படிக்க!
+52,te,మరింత చదవండి!
+53,fa,بیشتر بخوانید!
+54, so,Akhriso dheeraad ah!
+55,tg,Бештар хонед!
+56,ky,Дагы окуңуз!
+57,lo,ອ່ານ​ເພີ່ມ​ເຕີມ!
+58,gu,વધુ વાંચો!
+59,mr,अधिक वाचा!
+60,ml,കൂടുതൽ വായിക്കൂ!
+61,kn,ಮತ್ತಷ್ಟು ಓದಿ!
+62,my,ဆက်လက်ဖတ်ရှုပါ။
+63,kk,Толығырақ оқу!
+64,tk,Has köp okaň!
+65,af,Lees Meer!
+66,pa,ਹੋਰ ਪੜ੍ਹੋ!
+67,be,Чытаць больш!
+68,sw,Soma Zaidi!
+69,mn,Дэлгэрэнгүй унших!
+70,am,ተጨማሪ አንብብ!
+72,ca,Llegeix més!
+96,tl,Magbasa Pa!
+104,or,ଅଧିକ ପଢ଼ନ୍ତୁ!

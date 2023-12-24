@@ -1,0 +1,286 @@
+﻿@page
+@model DSP.Models.OperationViewModel
+@{
+   
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage page</title>
+    <link rel="stylesheet" href="~/css/style.css">
+
+
+
+</head>
+<body>
+    <div id="dark-mode-toggle" style="position: fixed; top: 20px; right: 20px; cursor: pointer; z-index: 1000;">
+        <img id="theme-icon" src="light_mode_icon.png" style="width: 30px; height: 30px; border-radius: 15px;" />
+    </div>
+    <div class="container">
+        <h1>Керування офферами</h1>
+        <form asp-controller="Operation" asp-action="PerformOperation" method="post" class="form-container" id="operationForm">
+            <div class="form-group">
+                <label for="login">Логін</label>
+                <input  type="text" id="login" name="Login" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="Password" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="teaserId">Айді тизеру</label>
+                <input type="text" id="teaserId" name="TeaserId" class="form-control" required>
+            </div>
+
+            
+
+            <div class="form-group">
+                <label for="operation">Операція</label>
+                <select id="operation" name="Operation" class="form-control" required onchange="handleOperationChange()">
+                    <option value="">Оберіть операцію</option>
+                    <option value="enable">Включити</option>
+                    <option value="disable">Виключити</option>
+                    <option value="changeRoi">Змінити ROI</option>
+                    <option value="changeMode">Змінити режим</option>
+                    <option value="changePayout">Змінити виплату</option>
+                    <option value="changeClimit">Змінити Climit</option>
+                </select>
+            </div>
+
+            <div id="additionalFields"></div>
+
+            <button type="submit" class="btn btn-primary" id="startButton">Старт</button>
+        </form>
+
+        @if (ViewBag.StatusMessage != null)
+        {
+            <p>@ViewBag.StatusMessage</p>
+        }
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <p class="error-message">@ViewBag.ErrorMessage</p>
+        }
+
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">На головну</a>
+    </div>
+
+    <button id="contactButton" style="position: fixed; left: 10px; bottom: 10px; z-index: 1001;">Відкрити форму</button>
+
+    <div id="contactForm" style="display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1002; background: white; padding: 20px; box-shadow: 0px 0px 10px rgba(0,0,0,0.5);">
+        <input type="text" id="name" placeholder="Имя" />
+        <input type="text" id="phone" placeholder="Телефон" />
+        <input type="email" id="email" placeholder="Email" />
+        <button id="sendButton">Відправити</button>
+    </div>
+
+
+    @section Scripts {
+        <script>
+            function handleOperationChange() {
+                const operation = document.getElementById("operation").value;
+                const additionalFieldsDiv = document.getElementById("additionalFields");
+
+                additionalFieldsDiv.innerHTML = '';
+
+                
+                if (operation === "changeRoi") {
+                    additionalFieldsDiv.innerHTML = `
+                                    <div class="form-group">
+                                        <label for="roiSource">ROI Source</label>
+                                        <input type="text" id="roiSource" name="RoiSource" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="roiUsers">ROI Users</label>
+                                        <input type="text" id="roiUsers" name="RoiUsers" class="form-control" required>
+                                    </div>
+                                `;
+                } else if (operation === "changeMode") {
+                    additionalFieldsDiv.innerHTML = `
+                                    <div class="form-group">
+                                        <label for="mode">Режим</label>
+                                        <input type="text" id="mode" name="Mode" class="form-control" required>
+                                    </div>
+                                `;
+                }
+
+                else if (operation === "changePayout") {
+                    additionalFieldsDiv.innerHTML = `
+                                                <div class="form-group">
+                                                    <label for="mode">Виплата</label>
+                                                    <input type="text" id="payout" name="Payout" class="form-control" required>
+                                                </div>
+                                            `;
+                }
+
+                else if (operation === "changeClimit") {
+                    additionalFieldsDiv.innerHTML = `
+                                                            <div class="form-group">
+                                                                <label for="mode">C_Limit</label>
+                                                                <input type="text" id="climit" name="Climit" class="form-control" required>
+                                                            </div>
+                                                        `;
+                }
+            }
+        </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                validateForm();
+            });
+
+
+            document.getElementById("operationForm").onsubmit = function (event) {
+                
+                document.getElementById("startButton").disabled = true;
+                document.getElementById("statusMessage").innerText = "В процессі...";
+            };
+
+
+            document.getElementById("operationForm").onsubmit = function (event) {
+                
+                const operation = document.getElementById("operation").value;
+                if (operation === "changeRoi" && (
+                    !validateNumberInput("roiSource", 0, 500) ||
+                    !validateNumberInput("roiUsers", 0, 90))) {
+                    event.preventDefault(); 
+                    return false;
+                }
+
+                if (operation === "changePayout" && !validateNonZeroInput("payout")) {
+                    event.preventDefault(); 
+                    return false;
+                }
+            };
+
+            function validateNumberInput(elementId, min, max) {
+                const inputElement = document.getElementById(elementId);
+                if (inputElement) {
+                    const value = parseInt(inputElement.value);
+                    if (isNaN(value) || value < min || value > max) {
+                        alert(`Значення в полі ${elementId} має бути числом від ${min} до ${max}.`);
+                        return false;
+                    }
+                    return true;
+                }
+                return true; 
+            }
+
+            function validateNonZeroInput(elementId) {
+                const inputElement = document.getElementById(elementId);
+                if (inputElement) {
+                    const value = parseFloat(inputElement.value);
+                    if (isNaN(value) || value <= 0) {
+                        alert(`Значення в полі ${elementId} не може бути 0 або з комою (має бути крапка).`);
+                        return false;
+                    }
+                    return true;
+                }
+                return false; 
+            }
+        </script>
+        <script>
+            function createSnowflake() {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.opacity = Math.random();
+                snowflake.style.width = '10px';
+                snowflake.style.height = '10px';
+                snowflake.style.position = 'fixed';
+                snowflake.style.background = 'white';
+                snowflake.style.borderRadius = '50%';
+                snowflake.style.top = '-10px';
+                document.body.appendChild(snowflake);
+
+               
+                let yPos = 0;
+                const interval = setInterval(() => {
+                    yPos += 1;
+                    snowflake.style.top = yPos + 'px';
+
+                    if (yPos > window.innerHeight) {
+                        clearInterval(interval);
+                        snowflake.remove();
+                    }
+                }, 10);
+
+                setTimeout(() => {
+                    clearInterval(interval);
+                    snowflake.remove();
+                }, 10000);
+            }
+
+            setInterval(createSnowflake, 100);
+        </script>
+
+        <script>
+            function setCookie(name, value, days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            }
+
+            function getCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            function updateThemeIcon() {
+                var themeIcon = document.getElementById('theme-icon');
+                if (document.body.classList.contains('dark-mode')) {
+                    themeIcon.src = 'https://cdn.icon-icons.com/icons2/1370/PNG/512/if-weather-3-2682848_90785.png'; 
+                } else {
+                    themeIcon.src = 'https://cdn.icon-icons.com/icons2/1527/PNG/512/moon_106693.png'; 
+                }
+            }
+
+            document.getElementById('dark-mode-toggle').addEventListener('click', function () {
+                document.body.classList.toggle('dark-mode');
+                var theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                setCookie('theme', theme, 7); 
+                updateThemeIcon(); 
+            });
+
+            window.onload = function () {
+                var savedTheme = getCookie('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+                updateThemeIcon(); 
+            };
+        </script>
+        <script>
+            document.getElementById("contactButton").onclick = function () {
+                document.getElementById("contactForm").style.display = "block";
+            };
+        </script>
+
+        <script>
+            document.getElementById("sendButton").onclick = function () {
+                alert("Дані відправлені!");
+                document.getElementById("contactForm").style.display = "none";
+            };
+        </script>
+
+    }
+
+</body>
+</html>

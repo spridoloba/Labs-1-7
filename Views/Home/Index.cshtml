@@ -1,0 +1,269 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    
+
+
+    <style>
+@@keyframes fall {
+    from { transform: translateY(-100px); }
+    to { transform: translateY(100vh); }
+}
+
+.snowflake {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    animation: fall 10s linear infinite;
+}
+</style>
+    <style>
+        .dark-mode-button {
+            background-color: white; 
+           
+        }
+    </style>
+</head>
+<body>
+    <div id="dark-mode-toggle" style="position: fixed; top: 20px; right: 20px; cursor: pointer; z-index: 1000;">
+        <img id="theme-icon" src="https://cdn.icon-icons.com/icons2/1527/PNG/512/moon_106693.png" style="width: 30px; height: 30px; border-radius: 15px;" />
+</div>
+
+    <div class="container">
+        <h1>Добавлення офферів</h1>
+        
+        <form asp-controller="Home" asp-action="FetchData" method="post" class="form-container" id="offerForm">
+            <div class="form-group">
+                <label for="teaserId">Айді тизеру</label>
+                <input type="text" id="teaserId" name="TeaserId" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="teaserTags">Теги тизеру</label>
+                <input type="text" id="teaserTags" name="TeaserTags" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="roiSource">ROI Source</label>
+                <input type="text" id="roiSource" name="ROISource" class="form-control" value="100">
+            </div>
+
+            <div class="form-group">
+                <label for="roiUsers">ROI Users</label>
+                <input type="text" id="roiUsers" name="ROIUsers" class="form-control" value="80">
+            </div>
+
+            <div class="form-group">
+                <label for="geo">GEO</label>
+                <select id="geo" name="GEO" class="form-control">
+                    <option value="us">США</option>
+                    
+                </select>
+
+            </div>
+         
+            <div class="snow">
+                <div></div>
+            </div>
+
+            <div class="form-group">
+                <label for="participants">Учасники</label>
+                <select id="participants" name="Participants" class="form-control">
+                    
+                    <option value="pridoloba">Pridoloba Sergiy</option>
+                    
+                </select>
+            </div>
+
+            
+
+            <div class="form-group">
+                <label for="teaserCategory">Тип тизеру (R,PG,NC17,NSFW)</label>
+                <select id="teaserCategory" name="TeaserCategory" class="form-control">
+                    <option value="r">R</option>
+                    <option value="pg">PG</option>
+                    <option value="nc17">NC17</option>
+                    <option value="nsfw">NSFW</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="payout">Виплата</label>
+                <input type="text" id="payout" name="Payout" class="form-control">
+            </div>
+
+           
+
+            <div class="form-group">
+                <label for="buttonText">Оффер</label>
+                <input type="text" id="offer" name="Offer" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="submitButton">Добавити</button>
+            </div>
+            <p id="statusMessage"></p>
+        </form>
+
+        <a href="@Url.Action("SecondPage", "Home")" class="btn btn-secondary">Керування офферами</a>
+
+        @if (ViewBag.StatusMessage != null)
+        {
+            <p class="status-message">@ViewBag.StatusMessage</p>
+        }
+
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <p class="error-message">@ViewBag.ErrorMessage</p>
+        }
+
+
+
+        @section Scripts {
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    validateForm();
+                });
+
+                document.getElementById("offerForm").onsubmit = function (event) {
+                    
+                    processInputValue("offer");
+                    processInputValue("teaserTags");
+                    processInputValue("geo");
+                   
+                   
+
+                    
+                    document.getElementById("submitButton").disabled = true;
+                    document.getElementById("statusMessage").innerText = "В процессі...";
+                };
+
+               
+                const requiredFields = ["teaserId", "roiSource", "roiUsers", "geo", "payout", "offer"];
+                requiredFields.forEach(field => {
+                    document.getElementById(field).addEventListener("input", validateForm);
+                });
+
+                function processInputValue(elementId) {
+                    const input = document.getElementById(elementId);
+                    let inputValue = input.value;
+
+                    inputValue = inputValue.replace(/\s+/g, '').toLowerCase();
+                    input.value = inputValue;
+                }
+
+                function validateForm() {
+                    let isValid = true;
+                    requiredFields.forEach(field => {
+                        if (document.getElementById(field).value.trim() === "") {
+                            isValid = false;
+                        }
+                    });
+
+                    document.getElementById("submitButton").disabled = !isValid;
+                }
+            </script>
+
+            <script>
+                function createSnowflake() {
+                    const snowflake = document.createElement('div');
+                    snowflake.classList.add('snowflake');
+                    snowflake.style.left = Math.random() * 100 + 'vw';
+                    snowflake.style.opacity = Math.random();
+                    snowflake.style.width = '10px';
+                    snowflake.style.height = '10px';
+                    snowflake.style.position = 'fixed';
+                    snowflake.style.background = 'white';
+                    snowflake.style.borderRadius = '50%';
+                    snowflake.style.top = '-10px';  
+                    document.body.appendChild(snowflake);
+
+                  
+                    let yPos = 0;
+                    const interval = setInterval(() => {
+                        yPos += 1;
+                        snowflake.style.top = yPos + 'px';
+
+                        if (yPos > window.innerHeight) {
+                            clearInterval(interval);
+                            snowflake.remove();
+                        }
+                    }, 10);
+
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        snowflake.remove();
+                    }, 10000);
+                }
+
+                setInterval(createSnowflake, 100);
+            </script>
+
+            <script>
+                function setCookie(name, value, days) {
+                    var expires = "";
+                    if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                        expires = "; expires=" + date.toUTCString();
+                    }
+                    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                }
+
+                function getCookie(name) {
+                    var nameEQ = name + "=";
+                    var ca = document.cookie.split(';');
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                    }
+                    return null;
+                }
+
+                function updateThemeIcon() {
+                    var themeIcon = document.getElementById('theme-icon');
+                    if (document.body.classList.contains('dark-mode')) {
+                        themeIcon.src = 'https://cdn.icon-icons.com/icons2/1370/PNG/512/if-weather-3-2682848_90785.png'; 
+                    } else {
+                        themeIcon.src = 'https://cdn.icon-icons.com/icons2/1527/PNG/512/moon_106693.png'; 
+                    }
+                }
+
+                document.getElementById('dark-mode-toggle').addEventListener('click', function () {
+                    document.body.classList.toggle('dark-mode');
+                    var theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                    setCookie('theme', theme, 7); 
+                    updateThemeIcon(); 
+                });
+
+                window.onload = function () {
+                    var savedTheme = getCookie('theme');
+                    if (savedTheme === 'dark') {
+                        document.body.classList.add('dark-mode');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                    }
+                    updateThemeIcon();
+                };
+            </script>
+
+
+
+        }
+
+    </div>
+    
+</body>
+</html>
+

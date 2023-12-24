@@ -1,0 +1,24 @@
+/* Стили для темной темы */
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+/* Стили для кнопки перехода на вторую страницу в темной теме */
+.btn-secondary {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Стили для кнопки переключения тем */
+#toggle-theme {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+/* Анимация переключения тем */
+body.transition {
+    transition: background-color 0.5s, color 0.5s;
+}
